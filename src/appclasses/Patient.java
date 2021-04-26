@@ -17,12 +17,12 @@ public class Patient {
     private final Sex gender;
     private final LocalDate birthday;
 
-    private Patient() {
+    private Patient(String lastName) {
         Scanner s = new Scanner(System.in);
         System.out.print("Enter patient's first name: ");
         firstName = s.nextLine();
         System.out.print("Enter patient's last name: ");
-        lastName = s.nextLine();
+        this.lastName = lastName;
         System.out.print("Enter patient's gender (1 for male, 2 for female): ");
         gender = Sex.values()[s.nextInt() - 1];
         s.nextLine();
@@ -35,7 +35,7 @@ public class Patient {
         if(lastName.equals(""))
             throw new IllegalArgumentException("Patient name required to create record.");
         else
-            return new Patient();
+            return new Patient(lastName);
     }
 
     private static LocalDate dateInput(String input) {

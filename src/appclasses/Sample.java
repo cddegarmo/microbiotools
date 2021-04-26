@@ -6,17 +6,32 @@ import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.time.Period;
+import java.util.stream.Collectors;
 
 public class Sample {
 
     private static int samplesReceived = 0;
-    private static final List<Sample> samples = new ArrayList<>();
+    private static final List<Sample> SAMPLES = new ArrayList<>();
 
     private final Patient patient;
     private final Specimen specimen;
     private final List<Test> tests;
     private final LocalDate received;
     private boolean evaluated = false;
+    private final Predicate<Test> conditions = (Test t) -> {
+        LocalDate obtained = getReceived();
+        LocalDate collected = getSpecimen().getCollected();
+        Period between = Period.between(collected, obtained);
+        int days = between.getDays();
+        boolean expired = days > t.getExam().getMaxDays();
+        boolean notEnough = getSpecimen().getAmount() < t.getExam().getMassReqd();
+        if (expired || notEnough)
+            return false;
+        else
+            return true;
+    };
 
     public Sample(Patient patient,
                   Specimen specimen,
@@ -27,16 +42,17 @@ public class Sample {
         received = IsoChronology.INSTANCE.dateNow();
 
         ++samplesReceived;
-        samples.add(this);
+        SAMPLES.add(this);
     }
 
-    public static int getSamplesReceived()  { return samplesReceived;    }
-    public static List<Sample> getSamples() { return samples;            }
+    public static int getSamplesReceived()  { return samplesReceived; }
+    public static List<Sample> getSamples() { return SAMPLES;         }
 
-    public Patient getPatient()             { return patient;            }
-    public List<Test> getTests()            { return tests;              }
-    public LocalDate getReceived()          { return received;           }
-    public boolean isEvaluated()            { return evaluated;          }
+    public Patient getPatient()    { return patient;         }
+    public Specimen getSpecimen()  { return specimen;        }
+    public List<Test> getTests()   { return tests;           }
+    public LocalDate getReceived() { return received;        }
+    public boolean isEvaluated()   { return evaluated;       }
 
     private String receivedFormatter() {
         try {
@@ -47,6 +63,13 @@ public class Sample {
             System.out.printf("%s cannot be formatted", received);
             throw exc;
         }
+    }
+
+    private List<Test> testsApproved() {
+        List<Test> approved = tests.stream()
+             .filter(conditions)
+             .collect(Collectors.toList());
+        return new ArrayList<>(approved);
     }
 
     @Override
@@ -74,6 +97,6 @@ public class Sample {
         return String.format("Sample no. %d%nFrom patient: %s%n" +
              "Specimen: %s%nReceived on %s%nTests requested: %s%nTests approved: %s",
                              samplesReceived, patient.toString(), specimen.toString(),
-                             receivedFormatter(), tests.toString(), );
+                             receivedFormatter(), tests.toString(), testsApproved().toString());
     }
 }
