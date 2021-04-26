@@ -1,4 +1,4 @@
-package app_classes;
+package appclasses;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -14,8 +14,8 @@ public class Patient {
 
     private final String firstName;
     private final String lastName;
-    private Sex gender;
-    private LocalDate birthday;
+    private final Sex gender;
+    private final LocalDate birthday;
 
     private Patient() {
         Scanner s = new Scanner(System.in);

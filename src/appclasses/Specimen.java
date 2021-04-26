@@ -1,4 +1,4 @@
-package app_classes;
+package appclasses;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -17,10 +17,10 @@ public class Specimen {
         FLUID, TISSUE
     }
 
-    private Source from;
-    private Matter material;
-    private LocalDate collected;
-    private int amount;   // in grams
+    private final Source from;
+    private final Matter material;
+    private final LocalDate collected;
+    private final int amount;   // in grams
 
     private Specimen(Source from,
                      Matter material,

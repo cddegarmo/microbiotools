@@ -1,13 +1,13 @@
-package app_classes;
+package appclasses;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.chrono.IsoChronology;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Sample {
-
-    //NEEDS TOSTRING
 
     private static int samplesReceived = 0;
     private static final List<Sample> samples = new ArrayList<>();
@@ -38,6 +38,17 @@ public class Sample {
     public LocalDate getReceived()          { return received;           }
     public boolean isEvaluated()            { return evaluated;          }
 
+    private String receivedFormatter() {
+        try {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM d, yyyy");
+            String out = received.format(dtf);
+            return out;
+        } catch (DateTimeException exc) {
+            System.out.printf("%s cannot be formatted", received);
+            throw exc;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if(o == this)
@@ -56,5 +67,13 @@ public class Sample {
         result = 31 * result + tests.hashCode();
         result = 31 * result + received.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Sample no. %d%nFrom patient: %s%n" +
+             "Specimen: %s%nReceived on %s%nTests requested: %s%nTests approved: %s",
+                             samplesReceived, patient.toString(), specimen.toString(),
+                             receivedFormatter(), tests.toString(), );
     }
 }

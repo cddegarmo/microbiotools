@@ -1,4 +1,4 @@
-package app_classes;
+package appclasses;
 
 public class Test {
 
@@ -23,19 +23,16 @@ public class Test {
         public int getMaxDays()  { return maxAge;   }
     }
 
-    private Microbe potentialCause;
-    private Type exam;
-    private boolean conducted = false;
+    private final Microbe potentialCause;
+    private final Type exam;
 
     public Test(Microbe checkFor, Type procedure) {
         potentialCause = checkFor;
         exam = procedure;
-
     }
 
     public Microbe getPotentialCause() { return potentialCause; }
     public Type getExam()              { return exam;           }
-    public boolean isConducted()       { return conducted;      }
 
     public String toString() {
         return String.format("An exam is requested to check for a %s: %s%n",
