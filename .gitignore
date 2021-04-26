@@ -1,0 +1,6 @@
+out/
+*.iml
+*.iws
+artifacts/
+.DS_Store
+.idea/
