@@ -21,7 +21,6 @@ public class Patient {
         Scanner s = new Scanner(System.in);
         System.out.print("Enter patient's first name: ");
         firstName = s.nextLine();
-        System.out.print("Enter patient's last name: ");
         this.lastName = lastName;
         System.out.print("Enter patient's gender (1 for male, 2 for female): ");
         gender = Sex.values()[s.nextInt() - 1];

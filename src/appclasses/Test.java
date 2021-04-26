@@ -35,7 +35,7 @@ public class Test {
     public Type getExam()              { return exam;           }
 
     public String toString() {
-        return String.format("An exam is requested to check for a %s: %s%n",
+        return String.format("%s: %s",
                 potentialCause, exam);
     }
 }

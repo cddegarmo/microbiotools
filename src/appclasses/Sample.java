@@ -38,7 +38,9 @@ public class Sample {
                   List<Test> tests) {
         this.patient = patient;
         this.specimen = specimen;
-        this.tests = tests;
+        this.tests = new ArrayList<>(tests);
+        if (tests.size() == 0)
+            throw new IllegalArgumentException("At least one test must be requested.");
         received = IsoChronology.INSTANCE.dateNow();
 
         ++samplesReceived;
@@ -48,11 +50,15 @@ public class Sample {
     public static int getSamplesReceived()  { return samplesReceived; }
     public static List<Sample> getSamples() { return SAMPLES;         }
 
-    public Patient getPatient()    { return patient;         }
-    public Specimen getSpecimen()  { return specimen;        }
-    public List<Test> getTests()   { return tests;           }
-    public LocalDate getReceived() { return received;        }
-    public boolean isEvaluated()   { return evaluated;       }
+    public Patient getPatient()    { return patient;   }
+    public Specimen getSpecimen()  { return specimen;  }
+
+    public List<Test> getTests() {
+        return new ArrayList<>(tests);
+    }
+
+    public LocalDate getReceived() { return received;  }
+    public boolean isEvaluated()   { return evaluated; }
 
     private String receivedFormatter() {
         try {

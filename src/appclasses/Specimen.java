@@ -7,10 +7,7 @@ import java.time.format.DateTimeFormatter;
 public class Specimen {
 
     public enum Source {
-        SKIN, MUSCLE, BONE, OCULAR, BRAIN, HEART,
-        LUNG, ORAL, NASAL, ESOPHAGUS, TONGUE, STOMACH,
-        LIVER, PANCREAS, INTESTINE, COLON, KIDNEY,
-        BLADDER
+        SKIN, MUSCLE, BONE, ORGAN
     }
 
     public enum Matter {
@@ -25,7 +22,7 @@ public class Specimen {
     private Specimen(Source from,
                      Matter material,
                      LocalDate collected,
-                     int mass ) {
+                     int mass) {
         this.from = from;
         this.material = material;
         this.collected = collected;
