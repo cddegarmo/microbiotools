@@ -95,11 +95,4 @@ public class Patient {
     public String toString() {
         return String.format("%s, %s%nBorn: %s", lastName, firstName, birthdayFormatter());
     }
-
-    public static void main(String[] args) {
-        Patient test = Patient.addRecord("Roman");
-        System.out.println(test.birthday.toString());
-        System.out.println(test.birthdayFormatter());
-        System.out.println(test.getAge());
-    }
 }
