@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+// Class serving as user interface through command line
 public class TestFilter {
 
    private static LocalDate dateInput(String input) {

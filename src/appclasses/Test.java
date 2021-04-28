@@ -6,6 +6,8 @@ public class Test {
         VIRUS, PARASITE, BACTERIUM, FUNGUS
     }
 
+    // As with the Source enum, this is a simplified list of tests
+    // that could be conducted on a particular sample
     public enum Type {
         CULTURE (50, 7),
         SCREEN (50, 10),

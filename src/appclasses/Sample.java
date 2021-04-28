@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 
 public class Sample {
 
+    // These are not used heavily in the current version but they
+    // allow for project expansion OR a larger volume of runtime
+    // samples
     private static int samplesReceived = 0;
     private static final List<Sample> SAMPLES = new ArrayList<>();
 
@@ -54,12 +57,14 @@ public class Sample {
     public Specimen getSpecimen()  { return specimen;  }
 
     public List<Test> getTests() {
+        // return defensive copy
         return new ArrayList<>(tests);
     }
 
     public LocalDate getReceived() { return received;  }
     public boolean isEvaluated()   { return evaluated; }
 
+    // Modified version of birthdayFormatter() from Patient
     private String receivedFormatter() {
         try {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM d, yyyy");
@@ -71,6 +76,9 @@ public class Sample {
         }
     }
 
+    // Primary method influencing program output
+    // The stream needs to adequately filter out unnecessary
+    // tests for the program to be effective
     private List<Test> testsApproved() {
         List<Test> approved = tests.stream()
              .filter(conditions)

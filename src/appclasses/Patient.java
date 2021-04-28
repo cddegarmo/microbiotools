@@ -6,7 +6,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-public class Patient {
+// Patient mainly serves as a flexible, reusable class for
+// holding information and for evolving this project into
+// one that communicates with a database
+public class Patient implements Comparable<Patient> {
 
     public enum Sex {
         MALE, FEMALE
@@ -17,6 +20,7 @@ public class Patient {
     private final Sex gender;
     private final LocalDate birthday;
 
+    // Force static factory, prohibit subclassing
     private Patient(String lastName) {
         Scanner s = new Scanner(System.in);
         System.out.print("Enter patient's first name: ");
@@ -48,6 +52,8 @@ public class Patient {
         }
     }
 
+    // Utility method for outputting birthday in toString()
+    // Used in other classes
     private String birthdayFormatter() {
         try {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM d, yyyy");
@@ -65,8 +71,12 @@ public class Patient {
                 .getYears();
     }
 
-    public int compareByAge(Patient a, Patient b) {
-        return a.birthday.compareTo(b.birthday);
+    // Future versions will consider age as a factor for sorting
+    // sample priority, but comparing patients by age is also
+    // appropriate in most medical settings
+    @Override
+    public int compareTo(Patient p) {
+        return birthday.compareTo(p.birthday);
     }
 
     public String getFirstName()    { return firstName; }

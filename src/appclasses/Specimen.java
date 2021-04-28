@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 
 public class Specimen {
 
+    // Realistically there are many more potential sources for
+    // a specimen, but for simplicity we have kept it short
     public enum Source {
         SKIN, MUSCLE, BONE, ORGAN
     }
@@ -19,6 +21,7 @@ public class Specimen {
     private final LocalDate collected;
     private final int amount;   // in grams
 
+    // Force static factory, prohibit subclassing
     private Specimen(Source from,
                      Matter material,
                      LocalDate collected,
@@ -39,6 +42,7 @@ public class Specimen {
     public LocalDate getCollected() { return collected; }
     public int getAmount()          { return amount;    }
 
+    // Modified version of birthdayFormatter() in Patient
     private String collectedFormatter() {
         try {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM d, yyyy");
